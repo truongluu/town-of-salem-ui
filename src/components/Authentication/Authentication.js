@@ -42,8 +42,8 @@ const enhance = compose(
   withState('username', 'updateUsername', ''),
   withState('password', 'updatePassword', ''),
   withHandlers({
-    onLogin: props => event => console.log('on Login props: ', props),
-    onRegister: props => event => console.log('on Register props: ', props),
+    onLogin: props => () => console.log('on Login props: ', props),
+    onRegister: props => () => console.log('on Register props: ', props),
   }),
 );
 
