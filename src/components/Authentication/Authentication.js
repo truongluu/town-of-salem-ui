@@ -3,11 +3,12 @@
  */
 import React from 'react';
 import { compose, withHandlers, withState } from 'recompose';
-
 /*
 Project file imports
  */
-// import LOGIN_QUERY from '../../graphql/login.graphql';
+import LOGIN_QUERY from '../../graphql/login.graphql';
+
+console.log(LOGIN_QUERY);
 
 const Authentication = props => (
   <div>
