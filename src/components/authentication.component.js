@@ -2,16 +2,14 @@
 3rd Party library imports
  */
 import React from 'react';
-import { compose, withHandlers, withState } from 'recompose';
+import { compose, withState } from 'recompose';
 /*
 Project file imports
  */
-import LOGIN_QUERY from '../../graphql/login.graphql';
-
-console.log(LOGIN_QUERY);
 
 const Authentication = props => (
   <div>
+    <h1>Authentication</h1>
     <form>
       <div>
         <label htmlFor="username-input">Username:
@@ -34,18 +32,21 @@ const Authentication = props => (
         </label>
       </div>
     </form>
-    <button onClick={props.onLogin}>Login</button>
-    <button onClick={props.onRegister}>Register</button>
+    <button onClick={() => props.onLogin({ username: props.username, password: props.password })}>
+      Login
+    </button>
+    <small>or</small>
+    <button
+      onClick={() => props.onRegister({ username: props.username, password: props.password })}
+    >
+      Register
+    </button>
   </div>
 );
 
 const enhance = compose(
   withState('username', 'updateUsername', ''),
   withState('password', 'updatePassword', ''),
-  withHandlers({
-    onLogin: props => () => console.log('on Login props: ', props),
-    onRegister: props => () => console.log('on Register props: ', props),
-  }),
 );
 
 export default enhance(Authentication);

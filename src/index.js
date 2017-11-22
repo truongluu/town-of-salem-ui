@@ -9,7 +9,8 @@ import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-client-preset';
 Project file imports
  */
 import './index.css';
-import App from './components/App/App';
+import Root from './containers/Root/root.container';
+import configureStore from './store/index';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
@@ -17,9 +18,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const store = configureStore();
+
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <Root store={store} />
   </ApolloProvider>,
   document.getElementById('root'),
 );
