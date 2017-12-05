@@ -13,14 +13,6 @@ import Main from './main.container';
 import { AuthAction } from '../redux/actions';
 import { getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
 
-// INFO: App is a container connected to store to get the user.
-
-// const fakeLobby = {
-//   id: 'someID',
-//   users: ['user1', 'user2', 'user3'],
-//   isClosed: 0,
-// };
-
 const App = props =>
 	(props.username ? <Main />
 		: <Login onLogin={props.onLogin} onRegister={props.onRegister} />);

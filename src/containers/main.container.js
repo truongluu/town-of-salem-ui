@@ -6,11 +6,12 @@ import React from 'react';
 /*
 Project file imports
  */
-import Lobby from '../containers/lobby.container';
+import Lobby from './lobby.container';
+import Game from './game.container';
 
 const Main = props => (
 	props.game
-		? <h1>This should be Game Component</h1> : <Lobby />
+		? <Game /> : <Lobby />
 );
 
 export default Main;
