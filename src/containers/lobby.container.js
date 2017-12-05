@@ -19,7 +19,8 @@ const Lobby = props => (
 	<div>
 		<h1>Lobby</h1>
 		{props.currentStateQuery.currentState
-		&& props.currentStateQuery.currentState.lobby ? <LobbyComponent
+		&& props.currentStateQuery.currentState.lobby
+			? <LobbyComponent
 				{...props.currentStateQuery.currentState.lobby}
 				onLeaveLobby={props.onLeaveLobby}
 			/>
