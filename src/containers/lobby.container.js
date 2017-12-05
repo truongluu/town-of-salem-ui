@@ -28,13 +28,11 @@ const Lobby = props => (
 	</div>
 );
 
-const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZ1bmd1eWVuaHVuZyJ9.YPjyg-w7NN4eCGtCCnk2Z3pehWR-5JmaUeDTgBOfY_c';
-
 const withGraphqlData = graphql(CURRENT_STATE_QUERY, {
 	name: 'currentStateQuery',
-	options: () => ({
+	options: ({ token }) => ({
 		variables: {
-			token: fakeToken,
+			token,
 		},
 	}),
 	props: props => ({
@@ -66,7 +64,7 @@ const enhancer = compose(
 	lifecycle({
 		componentDidMount() {
 			this.props.subscribeToStateUpdates({
-				token: fakeToken,
+				token: this.props.token,
 			});
 		},
 	}),
