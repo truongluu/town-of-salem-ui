@@ -12,7 +12,7 @@ import LEAVE_LOBBY_MUTATION from './queries-mutations-subscriptions/leave-lobby.
 import STATE_UPDATES_SUBSCRIPTION from './queries-mutations-subscriptions/state-updates.graphql';
 import CURRENT_STATE_QUERY from './queries-mutations-subscriptions/current-state.graphql';
 
-import { errorLink, queryOrMutationLink, requestLink, subscriptionLink, } from './links';
+import { errorLink, queryOrMutationLink, requestLink, subscriptionLink } from './links';
 
 const Client = new ApolloClient({
 	ssrMode: true,

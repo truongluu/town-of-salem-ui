@@ -21,9 +21,9 @@ const client = new ApolloClient({
 const store = configureStore();
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <Root store={store} />
-  </ApolloProvider>,
+	<ApolloProvider client={client}>
+		<Root store={store} />
+	</ApolloProvider>,
 	document.getElementById('root'),
 );
 registerServiceWorker();
