@@ -10,8 +10,8 @@ Project file imports
  */
 import Login from '../components/authentication.component';
 import Main from './main.container';
-import { AuthAction } from '../actions';
-import { getAuthToken, getAuthTokenDecoded } from '../reducers';
+import { AuthAction } from '../redux/actions';
+import { getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
 
 // INFO: App is a container connected to store to get the user.
 

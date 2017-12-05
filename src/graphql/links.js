@@ -18,11 +18,6 @@ export const subscriptionLink = (config = {}) =>
 		...config,
 	});
 
-// export const queryOrMutationLink = (config = {}) =>
-// 	new HttpLink({
-// 		uri: 'http://localhost:3000/graphql',
-// 		...config,
-// 	});
 
 export const queryOrMutationLink = (config = {}) =>
 	new ApolloLink((operation, forward) => {

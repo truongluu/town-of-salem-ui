@@ -5,7 +5,7 @@ import { createAction } from 'redux-actions';
 /*
 Project file imports
  */
-import { Client, JOIN_LOBBY_MUTATION, LEAVE_LOBBY_MUTATION } from '../graphql';
+import { Client, JOIN_LOBBY_MUTATION, LEAVE_LOBBY_MUTATION } from '../../graphql';
 
 const ActionTypes = {
 	JOIN_LOBBY: '[Lobby] JOIN_LOBBY',
@@ -23,8 +23,8 @@ export const startLobbyJoin = token => dispatch =>
 		.catch(e => dispatch(JoinLobby(e)));
 
 export const startLobbyLeave = token => dispatch =>
-	Client.query({
-		query: LEAVE_LOBBY_MUTATION,
+	Client.mutate({
+		mutation: LEAVE_LOBBY_MUTATION,
 		variables: { token },
 	}).then(result => dispatch(LeaveLobby(result.data.leaveLobby)))
 		.catch(e => dispatch(LeaveLobby(e)));

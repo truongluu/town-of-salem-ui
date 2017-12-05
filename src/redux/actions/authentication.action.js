@@ -7,7 +7,7 @@ import { compose, curry } from 'ramda';
 /*
 Project file imports
  */
-import { Client, LOGIN_QUERY, REGISTER_MUTATION } from '../graphql';
+import { Client, LOGIN_QUERY, REGISTER_MUTATION } from '../../graphql/index';
 
 const ActionTypes = {
 	INIT_USER: '[Auth] INIT_USER',

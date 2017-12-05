@@ -23,7 +23,7 @@ const Client = new ApolloClient({
 			subscription: subscriptionLink(),
 		}),
 	]),
-	cache: new InMemoryCache(),
+	cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
 });
 
 export {

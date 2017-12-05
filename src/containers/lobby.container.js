@@ -3,63 +3,51 @@
 3rd Party library imports
  */
 import React from 'react';
-import { compose, lifecycle, withHandlers } from 'recompose';
+import { branch, compose, lifecycle, renderComponent, withHandlers } from 'recompose';
 import { graphql } from 'react-apollo';
 import { connect } from 'react-redux';
 /*
 Project file imports
  */
-import { LobbyAction } from '../actions';
+import { LobbyAction } from '../redux/actions';
 import { CURRENT_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
-import { getAuthToken, getLobbyCommandResult } from '../reducers';
+import { getAuthToken, getLobbyCommandResult } from '../redux/reducers';
+import Loading from '../components/loading.component';
+import LobbyComponent from '../components/lobby.component';
 
 const Lobby = props => (
 	<div>
 		<h1>Lobby</h1>
-		<small>{props.commandResult}</small>
-		{props.currentStateQuery.currentState ? <div>
-			<button onClick={props.onLeaveLobby}>Leave Lobby</button>
-			<h3>ID: {props.currentStateQuery.currentState.lobby.id}</h3>
-			<h3>Users: </h3>
-			{props.currentStateQuery.currentState.lobby.users.map(user => <div key={user}>{user}</div>)}
-			<h3>Closed in: {props.currentStateQuery.currentState.lobby.isClosed}</h3>
-		</div> : <button onClick={props.currentStateQuery.onJoinLobby}>Join Lobby</button>
-		}
+		{props.currentStateQuery.currentState
+		&& props.currentStateQuery.currentState.lobby ? <LobbyComponent
+				{...props.currentStateQuery.currentState.lobby}
+				onLeaveLobby={props.onLeaveLobby}
+			/>
+			: <button onClick={props.onJoinLobby}>Join Lobby</button>}
 	</div>
 );
 
 const fakeToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZ1bmd1eWVuaHVuZyJ9.YPjyg-w7NN4eCGtCCnk2Z3pehWR-5JmaUeDTgBOfY_c';
 
 const withGraphqlData = graphql(CURRENT_STATE_QUERY, {
-	// props: ({ ownProps, data }) => ({
-	// 	ownProps,
-	// 	data: Maybe.fromNullable(data),
-	// }),
 	name: 'currentStateQuery',
 	options: () => ({
 		variables: {
 			token: fakeToken,
 		},
 	}),
-	// props: props => ({
-	// 	...props,
-	// 	subscribeToStateUpdates: param =>
-	// 		props.data.subscribeToMore({
-	// 			document: STATE_UPDATES_SUBSCRIPTION,
-	// 			variables: { token: param.token },
-	// 			updateQuery: (prev, { subscriptionData }) => {
-	// 				console.log('prev: ', prev);
-	// 				console.log('subscriptionData:', subscriptionData);
-	// 				// if (!subscriptionData) {
-	// 				// 	return prev;
-	// 				// }
-	// 				// console.log('subscriptionData: ', subscriptionData);
-	// 				return Object.assign({}, prev, {
-	// 					currentState: subscriptionData.data.stateUpdates,
-	// 				});
-	// 			},
-	// 		}),
-	// }),
+	props: props => ({
+		...props,
+		subscribeToStateUpdates: param =>
+			props.currentStateQuery.subscribeToMore({
+				document: STATE_UPDATES_SUBSCRIPTION,
+				variables: { token: param.token },
+				updateQuery: (prev, { subscriptionData }) => ({
+					currentState: subscriptionData.data.stateUpdates,
+				}),
+				onError: err => console.error(err),
+			}),
+	}),
 });
 
 const mapStateToProps = state => ({
@@ -70,23 +58,14 @@ const mapStateToProps = state => ({
 const enhancer = compose(
 	connect(mapStateToProps),
 	withGraphqlData,
+	branch(
+		props => props.currentStateQuery.loading,
+		renderComponent(Loading),
+	),
 	lifecycle({
 		componentDidMount() {
-			this.props.currentStateQuery.subscribeToMore({
-				document: STATE_UPDATES_SUBSCRIPTION,
-				variables: { token: fakeToken },
-				updateQuery: (prev, { subscriptionData }) => {
-					console.log('prev: ', prev);
-					console.log('subscriptionData:', subscriptionData);
-					// if (!subscriptionData) {
-					// 	return prev;
-					// }
-					// console.log('subscriptionData: ', subscriptionData);
-					return Object.assign({}, prev, {
-						currentState: subscriptionData.data.stateUpdates,
-					});
-				},
-				onError: err => console.error(err),
+			this.props.subscribeToStateUpdates({
+				token: fakeToken,
 			});
 		},
 	}),

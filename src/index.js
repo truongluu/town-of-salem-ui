@@ -9,7 +9,7 @@ Project file imports
  */
 import './index.css';
 import Root from './containers/root.container';
-import configureStore from './store/index';
+import configureStore from './redux/store/index';
 import registerServiceWorker from './registerServiceWorker';
 import { Client } from './graphql';
 
