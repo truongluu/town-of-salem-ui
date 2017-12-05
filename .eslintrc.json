@@ -5,7 +5,17 @@
     "no-underscore-dangle": "off",
     "react/jsx-filename-extension": "off",
     "react/prop-types": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-tabs": "off",
+    "indent": [
+      "error",
+      "tab"
+    ],
+    "react/jsx-indent-props": "off",
+    "react/jsx-indent": [
+      "on",
+      "tab"
+    ]
   },
   "env": {
     "jest": true,

@@ -14,8 +14,8 @@ import configureStore from './store/index';
 import registerServiceWorker from './registerServiceWorker';
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: '/graphql' }),
-  cache: new InMemoryCache(),
+	link: new HttpLink({ uri: '/graphql' }),
+	cache: new InMemoryCache(),
 });
 
 const store = configureStore();
@@ -24,6 +24,6 @@ ReactDOM.render(
   <ApolloProvider client={client}>
     <Root store={store} />
   </ApolloProvider>,
-  document.getElementById('root'),
+	document.getElementById('root'),
 );
 registerServiceWorker();

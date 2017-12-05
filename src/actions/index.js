@@ -6,7 +6,9 @@
 Project file imports
  */
 import * as AuthAction from './authentication.action';
+import * as LobbyAction from './lobby.action';
 
 export {
-  AuthAction,
+	AuthAction,
+	LobbyAction,
 };

@@ -45,8 +45,8 @@ const Authentication = props => (
 );
 
 const enhance = compose(
-  withState('username', 'updateUsername', ''),
-  withState('password', 'updatePassword', ''),
+	withState('username', 'updateUsername', ''),
+	withState('password', 'updatePassword', ''),
 );
 
 export default enhance(Authentication);

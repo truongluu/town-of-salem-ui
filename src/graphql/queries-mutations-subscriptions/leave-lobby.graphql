@@ -1,0 +1,3 @@
+mutation leaveLobby($token: String!){
+    leaveLobby(token: $token)
+}

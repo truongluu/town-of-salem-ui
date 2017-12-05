@@ -4,34 +4,42 @@
 import React from 'react';
 import { compose, lifecycle, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
+import { prop } from 'ramda';
 /*
 Project file imports
  */
 import Login from '../components/authentication.component';
+import Main from './main.container';
 import { AuthAction } from '../actions';
-import { getAuthUsername } from '../reducers';
+import { getAuthToken, getAuthTokenDecoded } from '../reducers';
 
 // INFO: App is a container connected to store to get the user.
 
-// props: {username: ...}
+// const fakeLobby = {
+//   id: 'someID',
+//   users: ['user1', 'user2', 'user3'],
+//   isClosed: 0,
+// };
+
 const App = props =>
-  (props.username ? <h1>Hello to TOS</h1>
-    : <Login onLogin={props.onLogin} onRegister={props.onRegister} />);
+	(props.username ? <Main />
+		: <Login onLogin={props.onLogin} onRegister={props.onRegister} />);
 
 const mapStateToProps = state => ({
-  username: getAuthUsername(state),
+	username: prop('username')(getAuthTokenDecoded(state)),
+	token: getAuthToken(state),
 });
 
 const enhancer = compose(
-  connect(mapStateToProps /* , mapDispatchToProp  */),
-  withHandlers({
-    onLogin: props => user => props.dispatch(AuthAction.startUserLogin(user)),
-    onRegister: props => user => props.dispatch(AuthAction.startUserRegister(user)),
-  }),
-  lifecycle({
-    componentDidMount() {
-      this.props.dispatch(AuthAction.startUserInit());
-    },
-  }),
+	connect(mapStateToProps),
+	withHandlers({
+		onLogin: props => user => props.dispatch(AuthAction.startUserLogin(user)),
+		onRegister: props => user => props.dispatch(AuthAction.startUserRegister(user)),
+	}),
+	lifecycle({
+		componentDidMount() {
+			this.props.dispatch(AuthAction.startUserInit());
+		},
+	}),
 );
 export default enhancer(App);

@@ -6,13 +6,19 @@ import { createSelector } from 'reselect';
 /*
 Project file imports
  */
-import auth, { getUsername } from './authentication.reducer';
+import auth, { getToken, getTokenDecoded } from './authentication.reducer';
+import lobby, { getCommandResult } from './lobby.reducer';
 
 const reducers = combineReducers({
-  auth,
+	auth,
+	lobby,
 });
 
 export const getAuthState = state => state.auth;
-export const getAuthUsername = createSelector(getAuthState, getUsername);
+export const getAuthToken = createSelector(getAuthState, getToken);
+export const getAuthTokenDecoded = createSelector(getAuthState, getTokenDecoded);
+
+export const getLobbyState = state => state.lobby;
+export const getLobbyCommandResult = createSelector(getLobbyState, getCommandResult);
 
 export default reducers;

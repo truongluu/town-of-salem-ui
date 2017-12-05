@@ -11,12 +11,13 @@ import { InitUser, Login, Register } from '../actions/authentication.action';
 const initialState = {};
 
 const reducer = handleActions({
-  [combineActions(InitUser, Register, Login)]: {
-    next: (state, { payload }) => ({ token: payload }),
-    throw: (state, { payload }) => ({ error: payload }),
-  },
+	[combineActions(InitUser, Register, Login)]: {
+		next: (state, { payload }) => ({ token: payload }),
+		throw: (state, { payload }) => ({ error: payload }),
+	},
 }, initialState);
 
-export const getUsername = ({ token }) => decode(token);
+export const getTokenDecoded = ({ token }) => decode(token);
+export const getToken = ({ token }) => token;
 
 export default reducer;

@@ -1,0 +1,3 @@
+mutation joinLobby($token: String!){
+    joinLobby(token: $token)
+}

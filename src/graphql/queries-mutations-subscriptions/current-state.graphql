@@ -1,0 +1,10 @@
+query currentState($token: String!) {
+    currentState(token: $token){
+        lobby {
+            id,
+            users,
+            isClosed,
+            updatedAt
+        }
+    }
+}

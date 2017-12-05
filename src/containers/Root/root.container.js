@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import App from '../app.container';
 
 const Root = ({ store }) => (
-  <Provider store={store}>
-    <App />
-  </Provider>
+	<Provider store={store}>
+		<App />
+	</Provider>
 );
 
 Root.propTypes = {
-  store: PropTypes.object.isRequired,
+	store: PropTypes.object.isRequired,
 };
 export default Root;

@@ -1,0 +1,10 @@
+subscription stateUpdates($token: String!) {
+    stateUpdates(token: $token){
+        lobby {
+            id,
+            users,
+            isClosed,
+            updatedAt
+        }
+    }
+}
