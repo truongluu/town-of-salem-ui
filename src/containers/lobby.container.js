@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 Project file imports
  */
 import { LobbyAction } from '../redux/actions';
-import { CURRENT_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
+import { CURRENT_LOBBY_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
 import { getAuthToken, getLobbyCommandResult } from '../redux/reducers';
 import Loading from '../components/loading.component';
 import LobbyComponent from '../components/lobby.component';
@@ -28,7 +28,7 @@ const Lobby = props => (
 	</div>
 );
 
-const withGraphqlData = graphql(CURRENT_STATE_QUERY, {
+const withGraphqlData = graphql(CURRENT_LOBBY_STATE_QUERY, {
 	name: 'currentStateQuery',
 	options: ({ token }) => ({
 		variables: {

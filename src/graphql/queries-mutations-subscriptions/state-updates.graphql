@@ -5,6 +5,14 @@ subscription stateUpdates($token: String!) {
             users,
             isClosed,
             updatedAt
+        },
+        game {
+            id,
+            users {
+                username
+            }
+            createdAt
+            updatedAt
         }
     }
 }

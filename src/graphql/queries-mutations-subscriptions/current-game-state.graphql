@@ -1,0 +1,12 @@
+query currentState($token: String!) {
+    currentState(token: $token){
+        game {
+            id,
+            users{
+                username
+            },
+            createdAt,
+            updatedAt
+        }
+    }
+}

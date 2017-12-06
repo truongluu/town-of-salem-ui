@@ -10,7 +10,8 @@ import REGISTER_MUTATION from './queries-mutations-subscriptions/register.graphq
 import JOIN_LOBBY_MUTATION from './queries-mutations-subscriptions/join-lobby.graphql';
 import LEAVE_LOBBY_MUTATION from './queries-mutations-subscriptions/leave-lobby.graphql';
 import STATE_UPDATES_SUBSCRIPTION from './queries-mutations-subscriptions/state-updates.graphql';
-import CURRENT_STATE_QUERY from './queries-mutations-subscriptions/current-state.graphql';
+import CURRENT_LOBBY_STATE_QUERY from './queries-mutations-subscriptions/current-lobby-state.graphql';
+import CURRENT_GAME_STATE_QUERY from './queries-mutations-subscriptions/current-game-state.graphql';
 
 import { errorLink, queryOrMutationLink, requestLink, subscriptionLink } from './links';
 
@@ -33,5 +34,6 @@ export {
 	JOIN_LOBBY_MUTATION,
 	LEAVE_LOBBY_MUTATION,
 	STATE_UPDATES_SUBSCRIPTION,
-	CURRENT_STATE_QUERY,
+	CURRENT_LOBBY_STATE_QUERY,
+	CURRENT_GAME_STATE_QUERY,
 };
