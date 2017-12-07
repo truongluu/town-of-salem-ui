@@ -4,6 +4,8 @@ query currentState($token: String!) {
             _id,
             players {
                 username
+                lastWill
+                died
             },
             createdAt,
             updatedAt

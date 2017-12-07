@@ -12,20 +12,20 @@ Project file imports
 import Lobby from './lobby.container';
 import Game from '../components/game.component';
 import Loading from '../components/loading.component';
-import { getAuthToken } from '../redux/reducers';
+import { getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
 import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
+
+// TODO: normalize the game's players.
 
 const Main = props => (
 	props.currentStateQuery.currentState.game ?
-		<Game {...props.currentStateQuery.currentState.game} /> : <Lobby />
+		<Game {...props.currentStateQuery.currentState.game} username={props.username} /> : <Lobby />
 );
 
 const withGraphqlData = graphql(CURRENT_GAME_STATE_QUERY, {
 	name: 'currentStateQuery',
 	options: ({ token }) => ({
-		variables: {
-			token,
-		},
+		variables: { token },
 	}),
 	props: props => ({
 		...props,
@@ -43,6 +43,7 @@ const withGraphqlData = graphql(CURRENT_GAME_STATE_QUERY, {
 
 const mapStateToProps = state => ({
 	token: getAuthToken(state),
+	username: getAuthTokenDecoded(state).username,
 });
 
 const enhancer = compose(
