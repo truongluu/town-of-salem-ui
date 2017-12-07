@@ -10,9 +10,9 @@ Project file imports
 const Game = props => (
 	<div>
 		<h1>Game Component</h1>
-		<h3>ID: {props.id}</h3>
+		<h3>ID: {props._id}</h3>
 		<div>Users:</div>
-		{props.users.map(user => <div key={user.username}>{user.username}</div>)}
+		{props.players.map(player => <div key={player.username}>{player.username}</div>)}
 		<br />
 		<small>createdAt: {props.createdAt}</small>
 		<br />

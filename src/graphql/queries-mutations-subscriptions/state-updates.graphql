@@ -7,8 +7,8 @@ subscription stateUpdates($token: String!) {
             updatedAt
         },
         game {
-            id,
-            users {
+            _id,
+            players {
                 username
             }
             createdAt
