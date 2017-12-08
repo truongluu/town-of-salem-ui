@@ -1,8 +1,10 @@
-/* eslint-disable no-mixed-spaces-and-tabs, react/jsx-closing-tag-location */
+/* eslint-disable max-len, react/jsx-closing-tag-location */
 /*
 3rd Party library imports
  */
 import React from 'react';
+import { compose, withProps, withState } from 'recompose';
+import { reduce } from 'ramda';
 
 /*
 Project file imports
@@ -24,10 +26,37 @@ const Game = props => (
 				</div>))
 		}
 		<br />
+		<label htmlFor="last-will-input">Last Will:
+			<input
+				id="last-will-input"
+				type="text"
+				value={props.playerLastWill || ''}
+				onChange={event => props.updatePlayerLastWill(event.target.value)}
+				// onBlur={() => props.updatePlayerLastWill(props.normalizedPlayers[props.username].lastWill || '')}
+			/>
+		</label>
+		<button onClick={() => props.onUpdateLastWill(props.playerLastWill)}>Update last will</button>
+		<br />
 		<small>createdAt: {props.createdAt}</small>
 		<br />
 		<small>updatedAt: {props.updatedAt}</small>
 	</div>
 );
 
-export default Game;
+const normalizePlayers = reduce((acc, curr) => Object.assign(acc, { [curr.username]: curr }), {});
+
+const enhancer = compose(
+	withProps(props => ({
+		normalizedPlayers: normalizePlayers(props.players),
+	})),
+	withProps(props => ({
+		player: props.normalizedPlayers[props.username],
+	})),
+	withState(
+		'playerLastWill',
+		'updatePlayerLastWill',
+		props => props.player.lastWill || '',
+	),
+);
+
+export default enhancer(Game);

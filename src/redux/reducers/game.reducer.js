@@ -1,16 +1,16 @@
 /*
 3rd Party library imports
  */
-import { combineActions, handleActions } from 'redux-actions';
+import { handleActions } from 'redux-actions';
 /*
 Project file imports
  */
-import { JoinLobby, LeaveLobby } from '../actions/lobby.action';
+import { UpdateLastWill } from '../actions/game.action';
 
 const initialState = {};
 
 const reducer = handleActions({
-	[combineActions(JoinLobby, LeaveLobby)]: {
+	[UpdateLastWill]: {
 		next: (state, { payload }) => ({ commandResult: payload }),
 		throw: (state, { payload }) => ({ error: payload }),
 	},

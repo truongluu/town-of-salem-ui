@@ -3,7 +3,7 @@
 3rd Party library imports
  */
 import React from 'react';
-import { branch, compose, lifecycle, renderComponent } from 'recompose';
+import { branch, compose, lifecycle, renderComponent, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
 import { graphql } from 'react-apollo/index';
 /*
@@ -14,12 +14,16 @@ import Game from '../components/game.component';
 import Loading from '../components/loading.component';
 import { getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
 import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
+import { GameAction } from '../redux/actions';
 
 // TODO: normalize the game's players.
 
 const Main = props => (
-	props.currentStateQuery.currentState.game ?
-		<Game {...props.currentStateQuery.currentState.game} username={props.username} /> : <Lobby />
+	props.currentStateQuery.currentState.game ? <Game
+		{...props.currentStateQuery.currentState.game}
+		username={props.username}
+		onUpdateLastWill={props.onUpdateLastWill}
+	/> : <Lobby />
 );
 
 const withGraphqlData = graphql(CURRENT_GAME_STATE_QUERY, {
@@ -48,6 +52,10 @@ const mapStateToProps = state => ({
 
 const enhancer = compose(
 	connect(mapStateToProps),
+	withHandlers({
+		onUpdateLastWill: props => lastWill =>
+			props.dispatch(GameAction.startLastWillUpdate(props.token, lastWill)),
+	}),
 	withGraphqlData,
 	branch(
 		props => props.currentStateQuery.loading,
