@@ -16,8 +16,6 @@ import { getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
 import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
 import { GameAction } from '../redux/actions';
 
-// TODO: normalize the game's players.
-
 const Main = props => (
 	props.currentStateQuery.currentState.game ? <Game
 		{...props.currentStateQuery.currentState.game}
