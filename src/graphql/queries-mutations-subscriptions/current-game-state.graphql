@@ -6,6 +6,7 @@ query currentState($token: String!) {
                 username
                 lastWill
                 died
+                role
             },
             createdAt,
             updatedAt
