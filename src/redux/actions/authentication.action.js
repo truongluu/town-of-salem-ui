@@ -19,7 +19,7 @@ export const InitUser = createAction(ActionTypes.INIT_USER);
 export const Register = createAction(ActionTypes.REGISTER);
 export const Login = createAction(ActionTypes.LOGIN);
 
-const maybeGetUserInfo = () => Maybe.fromNullable(localStorage.getItem('token'));
+const maybeGetUserInfo = () => Maybe.fromNullable(sessionStorage.getItem('token'));
 
 const getMaybeOrElse = curry((somethingElse, maybe) =>
 	maybe.getOrElse(somethingElse));
@@ -36,7 +36,7 @@ export const startUserRegister = user => dispatch =>
 		mutation: REGISTER_MUTATION,
 		variables: { user },
 	}).then((result) => {
-		localStorage.setItem('token', result.data.register);
+		sessionStorage.setItem('token', result.data.register);
 		return result;
 	}).then(result => dispatch(Register(result.data.register)))
 		.catch(e => dispatch(Register(e)));
@@ -46,7 +46,7 @@ export const startUserLogin = user => dispatch =>
 		query: LOGIN_QUERY,
 		variables: { user },
 	}).then((result) => {
-		localStorage.setItem('token', result.data.login);
+		sessionStorage.setItem('token', result.data.login);
 		return result;
 	}).then(result => dispatch(Login(result.data.login)))
 		.catch(e => dispatch(Login(e)));
