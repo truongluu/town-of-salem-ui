@@ -14,6 +14,8 @@ const Game = props => (
 	<div>
 		<h1>Game Component</h1>
 		<h3>ID: {props._id}</h3>
+		<h3>phase: {props.phase}</h3>
+		<h3>time: {props.time}</h3>
 		<div>Players:</div>
 		{
 			props.players.map(player =>

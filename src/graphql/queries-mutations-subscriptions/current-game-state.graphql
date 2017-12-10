@@ -2,6 +2,8 @@ query currentState($token: String!) {
     currentState(token: $token){
         game {
             _id,
+            phase,
+            time,
             players {
                 username
                 lastWill

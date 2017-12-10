@@ -8,6 +8,8 @@ subscription stateUpdates($token: String!) {
         },
         game {
             _id,
+            phase
+            time
             players {
                 username
                 lastWill
