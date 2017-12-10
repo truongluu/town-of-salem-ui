@@ -14,18 +14,16 @@ const Game = props => (
 	<div>
 		<h1>Game Component</h1>
 		<h3>ID: {props._id}</h3>
-		<div>Users:</div>
+		<div>Players:</div>
 		{
 			props.players.map(player =>
 				(<div key={player.username}>
-					username: {player.username}
-					<br />
-					lastWill: {player.lastWill}
-					<br />
-					died: {player.died}
+					{player.username}
 				</div>))
 		}
 		<br />
+		<div>Player: {props.player.username}</div>
+		<div>Role: {props.player.role}</div>
 		<label htmlFor="last-will-input">Last Will:
 			<input
 				id="last-will-input"
@@ -36,10 +34,6 @@ const Game = props => (
 			/>
 		</label>
 		<button onClick={() => props.onUpdateLastWill(props.playerLastWill)}>Update last will</button>
-		<br />
-		<small>createdAt: {props.createdAt}</small>
-		<br />
-		<small>updatedAt: {props.updatedAt}</small>
 	</div>
 );
 

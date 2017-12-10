@@ -11,13 +11,14 @@ Project file imports
  */
 import { LobbyAction } from '../redux/actions';
 import { CURRENT_LOBBY_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
-import { getAuthToken, getLobbyCommandResult } from '../redux/reducers';
+import { getAuthToken, getAuthTokenDecoded, getLobbyCommandResult } from '../redux/reducers';
 import Loading from '../components/loading.component';
 import LobbyComponent from '../components/lobby.component';
 
 const Lobby = props => (
 	<div>
 		<h1>Lobby</h1>
+		<h3>Player: {props.username}</h3>
 		{props.currentStateQuery.currentState
 		&& props.currentStateQuery.currentState.lobby
 			? <LobbyComponent
@@ -52,6 +53,7 @@ const withGraphqlData = graphql(CURRENT_LOBBY_STATE_QUERY, {
 const mapStateToProps = state => ({
 	commandResult: getLobbyCommandResult(state),
 	token: getAuthToken(state),
+	username: getAuthTokenDecoded(state).username,
 });
 
 const enhancer = compose(

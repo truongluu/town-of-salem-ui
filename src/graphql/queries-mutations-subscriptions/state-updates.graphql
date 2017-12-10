@@ -12,6 +12,7 @@ subscription stateUpdates($token: String!) {
                 username
                 lastWill
                 died
+                role
             }
             createdAt
             updatedAt

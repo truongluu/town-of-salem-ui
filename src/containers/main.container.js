@@ -36,6 +36,7 @@ const withGraphqlData = graphql(CURRENT_GAME_STATE_QUERY, {
 				document: STATE_UPDATES_SUBSCRIPTION,
 				variables: { token: param.token },
 				updateQuery: (prev, { subscriptionData }) => ({
+					// INFO: prev contains previous state.
 					currentState: subscriptionData.data.stateUpdates,
 				}),
 				onError: err => console.error(err),
