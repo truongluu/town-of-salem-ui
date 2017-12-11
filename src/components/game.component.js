@@ -57,8 +57,9 @@ const enhancer = compose(
 	),
 	lifecycle({
 		componentWillReceiveProps() {
-			this.props.onSync();
-			// dispatch to change reconnect here
+			if (this.props.reconnect) {
+				this.props.onSync();
+			}
 		},
 	}),
 );
