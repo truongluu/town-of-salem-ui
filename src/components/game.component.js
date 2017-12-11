@@ -3,7 +3,7 @@
 3rd Party library imports
  */
 import React from 'react';
-import { compose, withProps, withState } from 'recompose';
+import { compose, lifecycle, withProps, withState } from 'recompose';
 import { reduce } from 'ramda';
 /*
 Project file imports
@@ -15,7 +15,8 @@ const Game = props => (
 		<h1>Game Component</h1>
 		<h3>ID: {props._id}</h3>
 		<h3>phase: {props.phase}</h3>
-		<CountdownTimer initialTimeRemaining={props.time * 1000} />
+		{!props.reconnect ? <CountdownTimer initialTimeRemaining={props.time * 1000} />
+			: <div>Interactions is disabled until next phase</div>}
 
 		<div>Players:</div>
 		{
@@ -54,6 +55,12 @@ const enhancer = compose(
 		'updatePlayerLastWill',
 		props => props.player.lastWill || '',
 	),
+	lifecycle({
+		componentWillReceiveProps() {
+			this.props.onSync();
+			// dispatch to change reconnect here
+		},
+	}),
 );
 
 export default enhancer(Game);

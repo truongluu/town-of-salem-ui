@@ -12,15 +12,17 @@ Project file imports
 import Lobby from './lobby.container';
 import Game from '../components/game.component';
 import Loading from '../components/loading.component';
-import { getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
+import { getAuthReconnect, getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
 import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
-import { GameAction } from '../redux/actions';
+import { AuthAction, GameAction } from '../redux/actions';
 
 const Main = props => (
 	props.currentStateQuery.currentState.game ? <Game
 		{...props.currentStateQuery.currentState.game}
 		username={props.username}
 		onUpdateLastWill={props.onUpdateLastWill}
+		reconnect={props.reconnect}
+		onSync={props.onSync}
 	/> : <Lobby />
 );
 
@@ -47,13 +49,16 @@ const withGraphqlData = graphql(CURRENT_GAME_STATE_QUERY, {
 const mapStateToProps = state => ({
 	token: getAuthToken(state),
 	username: getAuthTokenDecoded(state).username,
+	reconnect: getAuthReconnect(state),
 });
 
+// is reconnect == true, hide Countdown timer and disable interaction
 const enhancer = compose(
 	connect(mapStateToProps),
 	withHandlers({
 		onUpdateLastWill: props => lastWill =>
 			props.dispatch(GameAction.startLastWillUpdate(props.token, lastWill)),
+		onSync: props => () => props.dispatch(AuthAction.Sync()),
 	}),
 	withGraphqlData,
 	branch(
@@ -68,5 +73,4 @@ const enhancer = compose(
 		},
 	}),
 );
-
 export default enhancer(Main);

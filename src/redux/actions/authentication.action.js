@@ -13,11 +13,13 @@ const ActionTypes = {
 	INIT_USER: '[Auth] INIT_USER',
 	REGISTER: '[Auth] REGISTER',
 	LOGIN: '[Auth] LOGIN',
+	SYNC: '[Auth] SYNC',
 };
 
 export const InitUser = createAction(ActionTypes.INIT_USER);
 export const Register = createAction(ActionTypes.REGISTER);
 export const Login = createAction(ActionTypes.LOGIN);
+export const Sync = createAction(ActionTypes.SYNC);
 
 const maybeGetUserInfo = () => Maybe.fromNullable(sessionStorage.getItem('token'));
 
