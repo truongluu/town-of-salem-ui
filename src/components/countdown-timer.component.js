@@ -39,10 +39,12 @@ class CountdownTimer extends React.Component {
 	}
 
 	componentWillReceiveProps(newProps) {
-		if (this.state.timeoutId) {
-			clearTimeout(this.state.timeoutId);
+		if (newProps.initialTimeRemaining !== this.props.initialTimeRemaining) {
+			if (this.state.timeoutId) {
+				clearTimeout(this.state.timeoutId);
+			}
+			this.setState({ prevTime: null, timeRemaining: newProps.initialTimeRemaining });
 		}
-		this.setState({ prevTime: null, timeRemaining: newProps.initialTimeRemaining });
 	}
 
 	componentDidUpdate() {
