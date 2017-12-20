@@ -29,22 +29,23 @@ const Game = props => (
 		<br />
 		<div>Player: {props.player.username}</div>
 		<div>Role: {props.player.role}</div>
-		<LastWill
+		{!props.reconnect && <LastWill
 			currentPlayerLastWill={props.player.lastWill}
 			onUpdateLastWill={props.onUpdateLastWill}
-		/>
+		/>}
 	</div>
 );
 
 const normalizePlayers = reduce((acc, curr) => Object.assign(acc, { [curr.username]: curr }), {});
 
 const enhancer = compose(
-	withProps(props => ({
-		normalizedPlayers: normalizePlayers(props.players),
-	})),
-	withProps(props => ({
-		player: props.normalizedPlayers[props.username],
-	})),
+	withProps((props) => {
+		const normalizedPlayers = normalizePlayers(props.players);
+		return {
+			normalizedPlayers,
+			player: normalizedPlayers[props.username],
+		};
+	}),
 	lifecycle({
 		componentWillReceiveProps() {
 			if (this.props.reconnect) {
