@@ -23,6 +23,7 @@ const Main = props => (
 		onUpdateLastWill={props.onUpdateLastWill}
 		reconnect={props.reconnect}
 		onSync={props.onSync}
+		onInteract={props.onInteract}
 	/> : <Lobby />
 );
 
@@ -58,6 +59,8 @@ const enhancer = compose(
 	withHandlers({
 		onUpdateLastWill: props => lastWill =>
 			props.dispatch(GameAction.startLastWillUpdate(props.token, lastWill)),
+		onInteract: props => interaction =>
+			props.dispatch(GameAction.startInteract(interaction)),
 		onSync: props => () => props.dispatch(AuthAction.Sync()),
 	}),
 	withGraphqlData,

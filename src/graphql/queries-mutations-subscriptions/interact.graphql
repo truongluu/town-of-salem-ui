@@ -1,0 +1,3 @@
+mutation interact($gameId: String!, $source: PlayerInput!, $target: PlayerInput!){
+    interact(gameId: $gameId, source: $source, target: $target)
+}

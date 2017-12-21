@@ -10,6 +10,7 @@ Project file imports
  */
 import CountdownTimer from './countdown-timer.component';
 import LastWill from './last-will.component';
+import PlayerList from './player-list.component';
 
 const Game = props => (
 	<div>
@@ -17,15 +18,15 @@ const Game = props => (
 		<h3>ID: {props._id}</h3>
 		<h3>phase: {props.phase}</h3>
 		{!props.reconnect ? <CountdownTimer initialTimeRemaining={props.time * 1000} />
-			: <div>Interaction is disabled until next phase</div>}
+			: <div>Interactions are disabled until the next phase</div>}
 
-		<div>Players:</div>
-		{
-			props.players.map(player =>
-				(<div key={player.username}>
-					{player.username}
-				</div>))
-		}
+		<PlayerList
+			normalizedPlayers={props.normalizedPlayers}
+			gameId={props._id}
+			player={props.player}
+			players={props.players}
+			onInteract={props.onInteract}
+		/>
 		<br />
 		<div>Player: {props.player.username}</div>
 		<div>Role: {props.player.role}</div>
