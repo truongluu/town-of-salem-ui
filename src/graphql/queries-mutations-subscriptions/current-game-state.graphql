@@ -9,6 +9,8 @@ query currentState($token: String!) {
                 lastWill
                 died
                 role
+                status
+                interactionResults
             },
             createdAt,
             updatedAt

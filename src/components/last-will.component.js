@@ -20,7 +20,7 @@ const LastWill = props => (
 const enhancer = compose(withState(
 	'playerLastWill',
 	'updatePlayerLastWill',
-	props => props.currentPlayerLastWill,
+	props => props.currentPlayerLastWill || '',
 ));
 
 export default enhancer(LastWill);

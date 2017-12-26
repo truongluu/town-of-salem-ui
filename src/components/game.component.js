@@ -34,6 +34,9 @@ const Game = props => (
 			currentPlayerLastWill={props.player.lastWill}
 			onUpdateLastWill={props.onUpdateLastWill}
 		/>}
+		<div>Died: {props.player.died}</div>
+		<div>Status: {props.player.status}</div>
+		<div>Interaction results: {props.player.interactionResults}</div>
 	</div>
 );
 
