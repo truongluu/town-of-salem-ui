@@ -22,6 +22,7 @@ const Game = props => (
 
 		<PlayerList
 			normalizedPlayers={props.normalizedPlayers}
+			abilityEnabled={props.abilityEnabled}
 			gameId={props._id}
 			player={props.player}
 			players={props.players}
@@ -40,6 +41,42 @@ const Game = props => (
 	</div>
 );
 
+const ROLES = {
+	SHERIFF: 'Sheriff',
+	DOCTOR: 'Doctor',
+	INVESTIGATOR: 'Investigator',
+	JAILOR: 'Jailor',
+	MEDIUM: 'Medium',
+	GODFATHER: 'Godfather',
+	FRAMER: 'Framer',
+	EXECUTIONER: 'Executioner',
+	ESCORT: 'Escort',
+	MAFIOSO: 'Mafioso',
+	BLACKMAILER: 'Blackmailer',
+	SERIAL_KILLER: 'Serial Killer',
+	VIGILANTE: 'Vigilante',
+	JESTER: 'Jester',
+	SPY: 'Spy',
+};
+
+const ABILITY_PHASE = {
+	[ROLES.SHERIFF]: 'N',
+	[ROLES.DOCTOR]: 'N',
+	[ROLES.INVESTIGATOR]: 'N',
+	[ROLES.JAILOR]: 'D',
+	[ROLES.MEDIUM]: 'None', // can't do anything
+	[ROLES.GODFATHER]: 'N',
+	[ROLES.FRAMER]: 'D',
+	[ROLES.EXECUTIONER]: 'None', // can't do anything
+	[ROLES.ESCORT]: 'D',
+	[ROLES.MAFIOSO]: 'N',
+	[ROLES.BLACKMAILER]: 'D', // can change target's status at daytime
+	[ROLES.SERIAL_KILLER]: 'N',
+	[ROLES.VIGILANTE]: 'N',
+	[ROLES.JESTER]: 'None',
+	[ROLES.SPY]: 'None',
+};
+
 const normalizePlayers = reduce((acc, curr) => Object.assign(acc, { [curr.username]: curr }), {});
 
 const enhancer = compose(
@@ -50,6 +87,10 @@ const enhancer = compose(
 			player: normalizedPlayers[props.username],
 		};
 	}),
+	withProps(props => ({
+		abilityEnabled: ABILITY_PHASE[props.player.role] === props.phase[0]
+		&& props.player.status !== 'jailed' && props.player.status !== 'blocked',
+	})),
 	lifecycle({
 		componentWillReceiveProps() {
 			if (this.props.reconnect) {
