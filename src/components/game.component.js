@@ -61,16 +61,16 @@ const ROLES = {
 
 const ABILITY_PHASE = {
 	[ROLES.SHERIFF]: 'N',
-	[ROLES.DOCTOR]: 'N',
+	[ROLES.DOCTOR]: 'D',
 	[ROLES.INVESTIGATOR]: 'N',
 	[ROLES.JAILOR]: 'D',
-	[ROLES.MEDIUM]: 'None', // can't do anything
+	[ROLES.MEDIUM]: 'None',
 	[ROLES.GODFATHER]: 'N',
 	[ROLES.FRAMER]: 'D',
-	[ROLES.EXECUTIONER]: 'None', // can't do anything
+	[ROLES.EXECUTIONER]: 'None',
 	[ROLES.ESCORT]: 'D',
 	[ROLES.MAFIOSO]: 'N',
-	[ROLES.BLACKMAILER]: 'D', // can change target's status at daytime
+	[ROLES.BLACKMAILER]: 'N',
 	[ROLES.SERIAL_KILLER]: 'N',
 	[ROLES.VIGILANTE]: 'N',
 	[ROLES.JESTER]: 'None',
@@ -88,8 +88,10 @@ const enhancer = compose(
 		};
 	}),
 	withProps(props => ({
-		abilityEnabled: ABILITY_PHASE[props.player.role] === props.phase[0]
-		&& props.player.status !== 'jailed' && props.player.status !== 'blocked',
+		abilityEnabled: (ABILITY_PHASE[props.player.role] === props.phase[0]
+			&& props.player.status !== 'jailed'
+			&& props.player.status !== 'blocked')
+		|| props.phase[0] === 'V',
 	})),
 	lifecycle({
 		componentWillReceiveProps() {
