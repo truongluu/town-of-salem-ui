@@ -12,6 +12,7 @@ query currentState($token: String!) {
                 role
                 status
                 interactionResults
+                won
             },
             createdAt
             updatedAt

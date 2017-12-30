@@ -17,7 +17,8 @@ const Game = props => (
 	<div>
 		<h1>Game Component</h1>
 		<h3>ID: {props._id}</h3>
-		{props.ended && <GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} />}
+		{props.ended &&
+		<GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} won={props.player.won} />}
 		<h3>phase: {props.phase}</h3>
 		{!props.reconnect ? <CountdownTimer initialTimeRemaining={props.time * 1000} />
 			: <div>Interactions are disabled until the next phase</div>}

@@ -18,6 +18,7 @@ subscription stateUpdates($token: String!) {
                 role
                 status
                 interactionResults
+                won
             }
             createdAt
             updatedAt
