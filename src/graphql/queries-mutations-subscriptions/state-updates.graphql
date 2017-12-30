@@ -7,7 +7,8 @@ subscription stateUpdates($token: String!) {
             updatedAt
         },
         game {
-            _id,
+            _id
+            ended
             phase
             time
             players {

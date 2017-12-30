@@ -5,7 +5,7 @@
 import React from 'react';
 import { branch, compose, lifecycle, renderComponent, withHandlers } from 'recompose';
 import { connect } from 'react-redux';
-import { graphql } from 'react-apollo/index';
+import { graphql, withApollo } from 'react-apollo/index';
 /*
 Project file imports
  */
@@ -24,6 +24,7 @@ const Main = props => (
 		reconnect={props.reconnect}
 		onSync={props.onSync}
 		onInteract={props.onInteract}
+		onGoBackToLobby={props.onGoBackToLobby}
 	/> : <Lobby />
 );
 
@@ -56,12 +57,14 @@ const mapStateToProps = state => ({
 // is reconnect == true, hide Countdown timer and disable interaction
 const enhancer = compose(
 	connect(mapStateToProps),
+	withApollo,
 	withHandlers({
 		onUpdateLastWill: props => lastWill =>
 			props.dispatch(GameAction.startLastWillUpdate(props.token, lastWill)),
 		onInteract: props => interaction =>
 			props.dispatch(GameAction.startInteract(interaction)),
 		onSync: props => () => props.dispatch(AuthAction.Sync()),
+		onGoBackToLobby: props => () => props.client.resetStore(),
 	}),
 	withGraphqlData,
 	branch(

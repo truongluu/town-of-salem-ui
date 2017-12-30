@@ -11,11 +11,13 @@ Project file imports
 import CountdownTimer from './countdown-timer.component';
 import LastWill from './last-will.component';
 import PlayerList from './player-list.component';
+import GameEnded from './game-ended.component';
 
 const Game = props => (
 	<div>
 		<h1>Game Component</h1>
 		<h3>ID: {props._id}</h3>
+		{props.ended && <GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} />}
 		<h3>phase: {props.phase}</h3>
 		{!props.reconnect ? <CountdownTimer initialTimeRemaining={props.time * 1000} />
 			: <div>Interactions are disabled until the next phase</div>}
