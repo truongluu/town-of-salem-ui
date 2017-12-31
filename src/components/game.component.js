@@ -1,10 +1,10 @@
-/* eslint-disable max-len, react/jsx-closing-tag-location */
 /*
 3rd Party library imports
  */
 import React from 'react';
-import { compose, lifecycle, withProps } from 'recompose';
+import { compose, lifecycle, withHandlers, withProps } from 'recompose';
 import { reduce } from 'ramda';
+import { graphql } from 'react-apollo/index';
 /*
 Project file imports
  */
@@ -12,6 +12,8 @@ import CountdownTimer from './countdown-timer.component';
 import LastWill from './last-will.component';
 import PlayerList from './player-list.component';
 import GameEnded from './game-ended.component';
+import { CURRENT_MESSAGES, MESSAGE_SUBSCRIPTION } from '../graphql';
+import Messages from './messages.component';
 
 const Game = props => (
 	<div>
@@ -41,6 +43,10 @@ const Game = props => (
 		<div>Died: {props.player.died ? 'Died' : 'Not Died'}</div>
 		<div>Status: {props.player.status}</div>
 		<div>Interaction results: {props.player.interactionResults}</div>
+		<Messages
+			messages={props.currentMessagesQuery.currentMessages}
+			onAddPublicMessage={props._onAddPublicMessage}
+		/>
 	</div>
 );
 
@@ -82,7 +88,27 @@ const ABILITY_PHASE = {
 
 const normalizePlayers = reduce((acc, curr) => Object.assign(acc, { [curr.username]: curr }), {});
 
+const withMessageData = graphql(CURRENT_MESSAGES, {
+	name: 'currentMessagesQuery',
+	options: ({ _id }) => ({
+		variables: { gameId: _id },
+	}),
+	props: props => ({
+		...props,
+		subscribeToMessage: param =>
+			props.currentMessagesQuery.subscribeToMore({
+				document: MESSAGE_SUBSCRIPTION,
+				variables: { token: param.token },
+				updateQuery: (prev, { subscriptionData }) => ({
+					currentMessages: [...prev.currentMessages, subscriptionData.data.message],
+				}),
+				onError: err => console.error(err),
+			}),
+	}),
+});
+
 const enhancer = compose(
+	withMessageData,
 	withProps((props) => {
 		const normalizedPlayers = normalizePlayers(props.players);
 		return {
@@ -96,9 +122,23 @@ const enhancer = compose(
 			&& props.player.status !== 'blocked')
 		|| props.phase[0] === 'V',
 	})),
+	withHandlers({
+		_onAddPublicMessage: props => (value) => {
+			props.onAddPublicMessage({
+				message: value,
+				source: props.player.username,
+				gameId: props._id,
+			});
+		},
+	}),
 	lifecycle({
-		componentWillReceiveProps() {
-			if (this.props.reconnect) {
+		componentDidMount() {
+			this.props.subscribeToMessage({
+				token: this.props.token,
+			});
+		},
+		componentWillReceiveProps(nextProps) {
+			if (this.props.reconnect && nextProps.phase !== this.props.phase) {
 				this.props.onSync();
 			}
 		},

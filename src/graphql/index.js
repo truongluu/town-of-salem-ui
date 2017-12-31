@@ -14,6 +14,9 @@ import CURRENT_LOBBY_STATE_QUERY from './queries-mutations-subscriptions/current
 import CURRENT_GAME_STATE_QUERY from './queries-mutations-subscriptions/current-game-state.graphql';
 import UPDATE_LAST_WILL from './queries-mutations-subscriptions/update-last-will.graphql';
 import INTERACT from './queries-mutations-subscriptions/interact.graphql';
+import CURRENT_MESSAGES from './queries-mutations-subscriptions/current-messages.graphql';
+import MESSAGE_SUBSCRIPTION from './queries-mutations-subscriptions/message.graphql';
+import ADD_PUBLIC_MESSAGE from './queries-mutations-subscriptions/add-public-message.graphql';
 
 import { errorLink, queryOrMutationLink, requestLink, subscriptionLink } from './links';
 
@@ -40,4 +43,7 @@ export {
 	CURRENT_GAME_STATE_QUERY,
 	UPDATE_LAST_WILL,
 	INTERACT,
+	CURRENT_MESSAGES,
+	MESSAGE_SUBSCRIPTION,
+	ADD_PUBLIC_MESSAGE,
 };

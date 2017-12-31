@@ -1,0 +1,7 @@
+query currentMessages($gameId: String!){
+    currentMessages(gameId: $gameId) {
+        source
+        target
+        message
+    }
+}

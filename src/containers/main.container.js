@@ -13,22 +13,24 @@ import Lobby from './lobby.container';
 import Game from '../components/game.component';
 import Loading from '../components/loading.component';
 import { getAuthReconnect, getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
-import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
-import { AuthAction, GameAction } from '../redux/actions';
+import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION, } from '../graphql';
+import { AuthAction, GameAction, MessageAction } from '../redux/actions';
 
 const Main = props => (
 	props.currentStateQuery.currentState.game ? <Game
 		{...props.currentStateQuery.currentState.game}
+		token={props.token}
 		username={props.username}
 		onUpdateLastWill={props.onUpdateLastWill}
 		reconnect={props.reconnect}
 		onSync={props.onSync}
 		onInteract={props.onInteract}
 		onGoBackToLobby={props.onGoBackToLobby}
+		onAddPublicMessage={props.onAddPublicMessage}
 	/> : <Lobby />
 );
 
-const withGraphqlData = graphql(CURRENT_GAME_STATE_QUERY, {
+const withGameStateData = graphql(CURRENT_GAME_STATE_QUERY, {
 	name: 'currentStateQuery',
 	options: ({ token }) => ({
 		variables: { token },
@@ -65,8 +67,12 @@ const enhancer = compose(
 			props.dispatch(GameAction.startInteract(interaction)),
 		onSync: props => () => props.dispatch(AuthAction.Sync()),
 		onGoBackToLobby: props => () => props.client.resetStore(),
+		onAddPublicMessage: props => (message) => {
+			// source, message, gameId
+			props.dispatch(MessageAction.startPublicMessageAdd(message));
+		},
 	}),
-	withGraphqlData,
+	withGameStateData,
 	branch(
 		props => props.currentStateQuery.loading,
 		renderComponent(Loading),

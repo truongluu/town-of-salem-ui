@@ -1,0 +1,8 @@
+subscription message($token: String!) {
+    message(token: $token){
+        source,
+        target,
+        message,
+        gameId
+    }
+}
