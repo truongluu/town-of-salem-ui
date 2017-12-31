@@ -9,7 +9,12 @@ const messages = props => (
 		<div>
 			{
 				props.messages &&
-				props.messages.map(message => <Message key={message.message} {...message} />)
+				props.messages
+					.filter(message =>
+						(!message.target ? true
+							: props.username === message.target
+							|| props.username === message.source))
+					.map(message => <Message key={message.message} {...message} />)
 			}
 		</div>
 		<MessageInput

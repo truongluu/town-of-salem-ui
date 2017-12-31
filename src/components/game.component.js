@@ -48,6 +48,7 @@ const Game = props => (
 			onAddPublicMessage={props._onAddPublicMessage}
 			onAddPrivateMessage={props._onAddPrivateMessage}
 			players={props.players}
+			username={props.username}
 		/>
 	</div>
 );
