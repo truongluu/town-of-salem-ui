@@ -35,7 +35,7 @@ const enhancer = compose(
 	withState('targetSelect', 'updateTargetSelect', 'all'),
 	withHandlers({
 		onInputMessage: props => (event) => {
-			if (event.key === 'Enter') {
+			if (event.key === 'Enter' && event.target.value.trim() !== '') {
 				if (props.targetSelect === 'all') {
 					props.onAddPublicMessage(event.target.value);
 				} else {
