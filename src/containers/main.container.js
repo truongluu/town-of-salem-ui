@@ -13,7 +13,7 @@ import Lobby from './lobby.container';
 import Game from '../components/game.component';
 import Loading from '../components/loading.component';
 import { getAuthReconnect, getAuthToken, getAuthTokenDecoded } from '../redux/reducers';
-import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION, } from '../graphql';
+import { CURRENT_GAME_STATE_QUERY, STATE_UPDATES_SUBSCRIPTION } from '../graphql';
 import { AuthAction, GameAction, MessageAction } from '../redux/actions';
 
 const Main = props => (
