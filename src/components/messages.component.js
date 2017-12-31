@@ -21,6 +21,7 @@ const messages = props => (
 			onAddPublicMessage={props.onAddPublicMessage}
 			onAddPrivateMessage={props.onAddPrivateMessage}
 			players={props.players}
+			username={props.username}
 		/>
 	</div>
 );

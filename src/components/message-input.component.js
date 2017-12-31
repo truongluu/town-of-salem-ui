@@ -14,6 +14,7 @@ const MessageInput = props => (
 				(<option
 					key={player.username}
 					value={player.username}
+					disabled={player.username === props.username}
 				>{player.username}
 				</option>))}
 		</select>
@@ -21,7 +22,6 @@ const MessageInput = props => (
 			<input
 				id="username-input"
 				type="text"
-				value={props.username}
 				onKeyPress={event => props.onInputMessage(event)}
 			/>
 		</label>
