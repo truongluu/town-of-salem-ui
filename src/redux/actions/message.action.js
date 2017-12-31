@@ -6,13 +6,15 @@ import { createAction } from 'redux-actions';
 /*
 Project file imports
  */
-import { ADD_PUBLIC_MESSAGE, Client } from '../../graphql';
+import { ADD_PRIVATE_MESSAGE, ADD_PUBLIC_MESSAGE, Client } from '../../graphql';
 
 const ActionTypes = {
 	ADD_PUBLIC_MESSAGE: '[Message] ADD_PUBLIC_MESSAGE',
+	ADD_PRIVATE_MESSAGE: '[Message] ADD_PRIVATE_MESSAGE',
 };
 
 export const AddPublicMessage = createAction(ActionTypes.ADD_PUBLIC_MESSAGE);
+export const AddPrivateMessage = createAction(ActionTypes.ADD_PRIVATE_MESSAGE);
 
 // "message": {
 // 	"source": "vnhung",
@@ -25,4 +27,11 @@ export const startPublicMessageAdd = message => dispatch =>
 		variables: { message },
 	}).then(result => dispatch(AddPublicMessage(result.data.addPublicMessage)))
 		.catch(e => dispatch(AddPublicMessage(e)));
+
+export const startPrivateMessageAdd = message => dispatch =>
+	Client.mutate({
+		mutation: ADD_PRIVATE_MESSAGE,
+		variables: { message },
+	}).then(result => dispatch(AddPrivateMessage(result.data.addPrivateMessage)))
+		.catch(e => dispatch(AddPrivateMessage(e)));
 

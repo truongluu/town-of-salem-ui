@@ -27,6 +27,7 @@ const Main = props => (
 		onInteract={props.onInteract}
 		onGoBackToLobby={props.onGoBackToLobby}
 		onAddPublicMessage={props.onAddPublicMessage}
+		onAddPrivateMessage={props.onAddPrivateMessage}
 	/> : <Lobby />
 );
 
@@ -67,10 +68,10 @@ const enhancer = compose(
 			props.dispatch(GameAction.startInteract(interaction)),
 		onSync: props => () => props.dispatch(AuthAction.Sync()),
 		onGoBackToLobby: props => () => props.client.resetStore(),
-		onAddPublicMessage: props => (message) => {
-			// source, message, gameId
-			props.dispatch(MessageAction.startPublicMessageAdd(message));
-		},
+		onAddPublicMessage: props => message =>
+			props.dispatch(MessageAction.startPublicMessageAdd(message)),
+		onAddPrivateMessage: props => message =>
+			props.dispatch(MessageAction.startPrivateMessageAdd(message)),
 	}),
 	withGameStateData,
 	branch(

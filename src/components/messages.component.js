@@ -12,7 +12,11 @@ const messages = props => (
 				props.messages.map(message => <Message key={message.message} {...message} />)
 			}
 		</div>
-		<MessageInput onAddPublicMessage={props.onAddPublicMessage} />
+		<MessageInput
+			onAddPublicMessage={props.onAddPublicMessage}
+			onAddPrivateMessage={props.onAddPrivateMessage}
+			players={props.players}
+		/>
 	</div>
 );
 

@@ -1,0 +1,3 @@
+mutation addPrivateMessage($message: MessageInput!){
+    addPrivateMessage(message: $message)
+}

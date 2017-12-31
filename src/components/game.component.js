@@ -46,6 +46,8 @@ const Game = props => (
 		<Messages
 			messages={props.currentMessagesQuery.currentMessages}
 			onAddPublicMessage={props._onAddPublicMessage}
+			onAddPrivateMessage={props._onAddPrivateMessage}
+			players={props.players}
 		/>
 	</div>
 );
@@ -128,6 +130,13 @@ const enhancer = compose(
 				message: value,
 				source: props.player.username,
 				gameId: props._id,
+			});
+		},
+		_onAddPrivateMessage: props => (messageAndTarget) => {
+			props.onAddPrivateMessage({
+				source: props.player.username,
+				gameId: props._id,
+				...messageAndTarget,
 			});
 		},
 	}),
