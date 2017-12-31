@@ -23,6 +23,7 @@ const messages = props => (
 			players={props.players}
 			username={props.username}
 			phase={props.phase}
+			status={props.status}
 		/>
 	</div>
 );

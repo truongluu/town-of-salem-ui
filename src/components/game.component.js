@@ -50,6 +50,7 @@ const Game = props => (
 			players={props.players}
 			username={props.username}
 			phase={props.phase}
+			status={props.player.status}
 		/>
 	</div>
 );
