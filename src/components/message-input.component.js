@@ -9,12 +9,12 @@ const MessageInput = props => (
 			value={props.targetSelect}
 			onChange={event => props.updateTargetSelect(event.target.value)}
 		>
-			<option value="all">All</option>
+			<option value="all" disabled={props.phase[0] === 'N'}>All</option>
 			{props.players.map(player =>
 				(<option
 					key={player.username}
 					value={player.username}
-					disabled={player.username === props.username}
+					disabled={player.username === props.username || props.phase[0] !== 'N'}
 				>{player.username}
 				</option>))}
 		</select>
