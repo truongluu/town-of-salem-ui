@@ -21,7 +21,6 @@ const Player = props => (
 			/>}
 			<hr />
 			<InteractionResults interactionResults={props.player.interactionResults} />
-			<div>Status: {props.player.status}</div>
 		</div>
 	</div>
 );
