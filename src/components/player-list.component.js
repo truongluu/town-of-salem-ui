@@ -24,7 +24,8 @@ const PlayerList = props => (
 							<span className="badge badge-success ml-2">Targeted</span>}
 						</span>
 						{
-							player.died ? <button
+							player.died
+								? <button
 									className="btn btn-sm btn-outline-primary"
 									onClick={() => props.onShowLastWill(player)}
 								>Last Will</button>
