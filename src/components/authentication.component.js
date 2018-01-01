@@ -2,49 +2,77 @@
 3rd Party library imports
  */
 import React from 'react';
-import { compose, withState } from 'recompose';
+import { compose, withHandlers, withState } from 'recompose';
 /*
 Project file imports
  */
 
 const Authentication = props => (
 	<div>
-		<h1>Authentication</h1>
-		<form>
-			<div>
-				<label htmlFor="username-input">Username:
-					<input
-						id="username-input"
-						type="text"
-						value={props.username}
-						onChange={event => props.updateUsername(event.target.value)}
-					/>
-				</label>
+		<div className="jumbotron bg-primary text-white">
+			<div className="container">
+				<h1 className="display-3">Town Of Salem Mini</h1>
 			</div>
-			<div>
-				<label htmlFor="password-input">Password:
-					<input
-						id="password-input"
-						type="password"
-						value={props.password}
-						onChange={event => props.updatePassword(event.target.value)}
-					/>
-				</label>
+		</div>
+		<div className="container">
+			<div className="row d-flex justify-content-center">
+				<form className="card w-50" onSubmit={props.onFormSubmit}>
+					<div className="card-header">
+						<h3>Authentication</h3>
+					</div>
+					<div className="card-body">
+						<div className="form-group">
+							<input
+								type="text"
+								className="form-control"
+								id="username-input"
+								placeholder="Username"
+								value={props.username}
+								onChange={event => props.updateUsername(event.target.value)}
+							/>
+						</div>
+						<div className="form-group">
+							<input
+								type="password"
+								className="form-control"
+								id="password-input"
+								placeholder="Password"
+								value={props.password}
+								onChange={event => props.updatePassword(event.target.value)}
+							/>
+						</div>
+						<div className="d-flex justify-content-end">
+							<button
+								type="button"
+								className="btn btn-link"
+								onClick={() =>
+									props.onRegister({ username: props.username, password: props.password })}
+							>
+								Register
+							</button>
+							<button
+								type="button"
+								className="btn btn-primary"
+								onClick={() =>
+									props.onLogin({ username: props.username, password: props.password })}
+							>
+								Login
+							</button>
+						</div>
+					</div>
+				</form>
 			</div>
-		</form>
-		<button onClick={() => props.onLogin({ username: props.username, password: props.password })}>
-			Login
-		</button>
-		<small>or</small>
-		<button
-			onClick={() => props.onRegister({ username: props.username, password: props.password })}
-		>
-			Register
-		</button>
+		</div>
 	</div>
 );
 
 const enhance = compose(
+	withHandlers({
+		onFormSubmit: props => (event) => {
+			props.onLogin({ username: props.username, password: props.password });
+			event.preventDefault();
+		},
+	}),
 	withState('username', 'updateUsername', ''),
 	withState('password', 'updatePassword', ''),
 );

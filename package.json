@@ -7,6 +7,7 @@
     "apollo-link-error": "^1.0.1",
     "apollo-link-ws": "^1.0.1",
     "apollo-utilities": "^0.1.1-1",
+    "bootstrap": "^4.0.0-beta.3",
     "folktale": "^2.0.1",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",

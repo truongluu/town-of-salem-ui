@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 /*
 Project file imports
  */
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import Root from './containers/root.container';
 import configureStore from './redux/store/index';
