@@ -52,7 +52,7 @@ const Authentication = props => (
 							</button>
 							<button
 								type="button"
-								className="btn btn-primary"
+								className="btn btn-outline-primary"
 								onClick={() =>
 									props.onLogin({ username: props.username, password: props.password })}
 							>
