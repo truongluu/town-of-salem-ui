@@ -115,9 +115,9 @@ class CountdownTimer extends React.Component {
 		const { timeRemaining } = this.state;
 
 		return (
-			<div className="timer">
+			<span className="badge badge-light">
 				{this.getFormattedTime(timeRemaining)}
-			</div>
+			</span>
 		);
 	}
 }

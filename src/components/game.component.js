@@ -17,13 +17,24 @@ import Messages from './messages.component';
 
 const Game = props => (
 	<div>
-		<h1>Game Component</h1>
-		<h3>ID: {props._id}</h3>
+		<div className="jumbotron bg-primary text-white">
+			<div className="container">
+				<h1 className="display-3">Game</h1>
+				<div className="lead">ID: {props._id}</div>
+				<div className="lead">
+					<span className="mr-2">
+						<span className="mr-2">Current phase:</span>
+						<span className="badge badge-light">{props.phase}</span>
+					</span>
+					<span>Current time: {!props.reconnect ?
+						<CountdownTimer initialTimeRemaining={props.time * 1000} />
+						: <span className="badge badge-light">N/A</span>}
+					</span>
+				</div>
+			</div>
+		</div>
 		{props.ended &&
 		<GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} won={props.player.won} />}
-		<h3>phase: {props.phase}</h3>
-		{!props.reconnect ? <CountdownTimer initialTimeRemaining={props.time * 1000} />
-			: <div>Interactions are disabled until the next phase</div>}
 
 		<PlayerList
 			normalizedPlayers={props.normalizedPlayers}
