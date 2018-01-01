@@ -4,7 +4,7 @@ import Message from './message.component';
 import MessageInput from './message-input.component';
 
 const messages = props => (
-	<div>
+	<div className="col-md-6">
 		<h1>Messages:</h1>
 		<div>
 			{

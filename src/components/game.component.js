@@ -9,8 +9,9 @@ import { graphql } from 'react-apollo/index';
 Project file imports
  */
 import CountdownTimer from './countdown-timer.component';
-import LastWill from './last-will.component';
+import Player from './player.component';
 import PlayerList from './player-list.component';
+import InteractionResults from './interaction-results.component';
 import GameEnded from './game-ended.component';
 import { CURRENT_MESSAGES, MESSAGE_SUBSCRIPTION } from '../graphql';
 import Messages from './messages.component';
@@ -33,36 +34,37 @@ const Game = props => (
 				</div>
 			</div>
 		</div>
-		{props.ended &&
-		<GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} won={props.player.won} />}
+		<div className="container">
+			<div className="row">
+				{props.ended &&
+				<GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} won={props.player.won} />}
 
-		<PlayerList
-			normalizedPlayers={props.normalizedPlayers}
-			abilityEnabled={props.abilityEnabled}
-			gameId={props._id}
-			player={props.player}
-			players={props.players}
-			onInteract={props.onInteract}
-		/>
-		<br />
-		<div>Player: {props.player.username}</div>
-		<div>Role: {props.player.role}</div>
-		{!props.reconnect && <LastWill
-			currentPlayerLastWill={props.player.lastWill}
-			onUpdateLastWill={props.onUpdateLastWill}
-		/>}
-		<div>Died: {props.player.died ? 'Died' : 'Not Died'}</div>
-		<div>Status: {props.player.status}</div>
-		<div>Interaction results: {props.player.interactionResults}</div>
-		<Messages
-			messages={props.currentMessagesQuery.currentMessages}
-			onAddPublicMessage={props._onAddPublicMessage}
-			onAddPrivateMessage={props._onAddPrivateMessage}
-			players={props.players}
-			username={props.username}
-			phase={props.phase}
-			status={props.player.status}
-		/>
+				<Player player={props.player} onUpdateLastWill={props.onUpdateLastWill} />
+
+				<Messages
+					messages={props.currentMessagesQuery.currentMessages}
+					onAddPublicMessage={props._onAddPublicMessage}
+					onAddPrivateMessage={props._onAddPrivateMessage}
+					players={props.players}
+					username={props.username}
+					phase={props.phase}
+					status={props.player.status}
+				/>
+				<div className="col-md-3">
+					<PlayerList
+						normalizedPlayers={props.normalizedPlayers}
+						abilityEnabled={props.abilityEnabled}
+						gameId={props._id}
+						player={props.player}
+						players={props.players}
+						onInteract={props.onInteract}
+					/>
+
+					<InteractionResults interactionResults={props.player.interactionResults} />
+				</div>
+
+			</div>
+		</div>
 	</div>
 );
 
