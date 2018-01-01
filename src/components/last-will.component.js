@@ -8,6 +8,7 @@ const LastWill = props => (
 			<span className="lead mr-2">Last Will:</span>
 			<button
 				className="btn btn-sm btn-outline-primary"
+				disabled={props.disabled}
 				onClick={() => props.onUpdateLastWill(props.playerLastWill)}
 			>
 				Update
@@ -15,6 +16,7 @@ const LastWill = props => (
 		</div>
 		<div className="form-group mt-2">
 			<textarea
+				disabled={props.disabled}
 				className="form-control"
 				id="exampleFormControlTextarea1"
 				rows="3"

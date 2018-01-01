@@ -2,19 +2,21 @@
 3rd Party library imports
  */
 import React from 'react';
-import { compose, lifecycle, withHandlers, withProps } from 'recompose';
+import { compose, lifecycle, withHandlers, withProps, withState } from 'recompose';
 import { reduce } from 'ramda';
 import { graphql } from 'react-apollo/index';
+import ReactModal from 'react-modal';
 /*
 Project file imports
  */
 import CountdownTimer from './countdown-timer.component';
 import Player from './player.component';
 import PlayerList from './player-list.component';
-import InteractionResults from './interaction-results.component';
 import GameEnded from './game-ended.component';
 import { CURRENT_MESSAGES, MESSAGE_SUBSCRIPTION } from '../graphql';
 import Messages from './messages.component';
+
+ReactModal.setAppElement(document.getElementById('root'));
 
 const Game = props => (
 	<div>
@@ -50,21 +52,30 @@ const Game = props => (
 					phase={props.phase}
 					status={props.player.status}
 				/>
-				<div className="col-md-3">
-					<PlayerList
-						normalizedPlayers={props.normalizedPlayers}
-						abilityEnabled={props.abilityEnabled}
-						gameId={props._id}
-						player={props.player}
-						players={props.players}
-						onInteract={props.onInteract}
-					/>
 
-					<InteractionResults interactionResults={props.player.interactionResults} />
-				</div>
-
+				<PlayerList
+					normalizedPlayers={props.normalizedPlayers}
+					abilityEnabled={props.abilityEnabled}
+					gameId={props._id}
+					phase={props.phase}
+					player={props.player}
+					players={props.players}
+					onInteract={props.onInteract}
+					onShowLastWill={props.onShowLastWill}
+				/>
 			</div>
 		</div>
+		<ReactModal isOpen={props.showModal}>
+			<div className="d-flex justify-content-between">
+				<div className="lead">{props.selectedLastWill}</div>
+				<button
+					className="btn btn-sm btn-outline-danger"
+					onClick={() => props.updateShowModal(false)}
+				>
+					Close
+				</button>
+			</div>
+		</ReactModal>
 	</div>
 );
 
@@ -140,6 +151,8 @@ const enhancer = compose(
 			&& props.player.status !== 'blocked')
 		|| props.phase[0] === 'V',
 	})),
+	withState('showModal', 'updateShowModal', false),
+	withState('selectedLastWill', 'updateSelectedLastWill', false),
 	withHandlers({
 		_onAddPublicMessage: props => (value) => {
 			props.onAddPublicMessage({
@@ -154,6 +167,10 @@ const enhancer = compose(
 				gameId: props._id,
 				...messageAndTarget,
 			});
+		},
+		onShowLastWill: props => (player) => {
+			props.updateSelectedLastWill(player.lastWill);
+			props.updateShowModal(true);
 		},
 	}),
 	lifecycle({

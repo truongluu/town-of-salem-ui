@@ -1,6 +1,7 @@
 import React from 'react';
 import LastWill from './last-will.component';
 import RoleInformation from './role-information.component';
+import InteractionResults from './interaction-results.component';
 
 const Player = props => (
 	<div className="card col-md-3">
@@ -14,9 +15,12 @@ const Player = props => (
 			<RoleInformation role={props.player.role} />
 			<hr />
 			{!props.reconnect && <LastWill
+				disabled={props.player.died}
 				currentPlayerLastWill={props.player.lastWill}
 				onUpdateLastWill={props.onUpdateLastWill}
 			/>}
+			<hr />
+			<InteractionResults interactionResults={props.player.interactionResults} />
 			<div>Status: {props.player.status}</div>
 		</div>
 	</div>

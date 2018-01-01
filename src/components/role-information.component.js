@@ -127,7 +127,7 @@ const RoleInformation = props => (
 		</div>
 		<div>
 			<div><b>Attributes:</b></div>
-			{ROLE_INFORMATIONS[props.role].attributes.map(attr => <div>{attr}</div>)}
+			{ROLE_INFORMATIONS[props.role].attributes.map(attr => <div key={attr}>{attr}</div>)}
 		</div>
 	</div>
 );
