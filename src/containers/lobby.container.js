@@ -15,17 +15,32 @@ import { getAuthToken, getAuthTokenDecoded, getLobbyCommandResult } from '../red
 import Loading from '../components/loading.component';
 import LobbyComponent from '../components/lobby.component';
 
+const isLobbyExisting = props =>
+	props.currentStateQuery.currentState
+	&& props.currentStateQuery.currentState.lobby;
+
 const Lobby = props => (
 	<div>
-		<h1>Lobby</h1>
-		<h3>Player: {props.username}</h3>
-		{props.currentStateQuery.currentState
-		&& props.currentStateQuery.currentState.lobby
-			? <LobbyComponent
+		<div className="jumbotron bg-primary text-white">
+			<div className="container">
+				<h1 className="display-3">Lobby</h1>
+				{isLobbyExisting(props) &&
+				<div className="lead">ID: {props.currentStateQuery.currentState.lobby.id}</div>}
+			</div>
+		</div>
+		<div className="container">
+			<div className="row">
+				<div className="lead mr-2">Player: <b>{props.username}</b></div>
+				{!isLobbyExisting(props) ?
+					<button className="btn btn-sm btn-outline-primary" onClick={props.onJoinLobby}>Join
+						Lobby</button>
+					: <button className="btn btn-sm btn-outline-danger" onClick={props.onLeaveLobby}>Leave
+						Lobby</button>}
+			</div>
+			{isLobbyExisting(props) && <LobbyComponent
 				{...props.currentStateQuery.currentState.lobby}
-				onLeaveLobby={props.onLeaveLobby}
-			/>
-			: <button onClick={props.onJoinLobby}>Join Lobby</button>}
+			/>}
+		</div>
 	</div>
 );
 
