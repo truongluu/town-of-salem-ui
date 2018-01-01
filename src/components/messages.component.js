@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 import React from 'react';
 
 import Message from './message.component';
@@ -5,8 +7,8 @@ import MessageInput from './message-input.component';
 
 const messages = props => (
 	<div className="col-md-6">
-		<h1>Messages:</h1>
-		<div>
+		<div className="lead">Messages:</div>
+		<ul className="list-group border rounded p-2" style={{ height: '500px', overflow: 'scroll' }}>
 			{
 				props.messages &&
 				props.messages
@@ -14,9 +16,9 @@ const messages = props => (
 						(!message.target ? true
 							: props.username === message.target
 							|| props.username === message.source))
-					.map(message => <Message key={message.message} {...message} />)
+					.map((message, index) => <Message key={index} {...message} username={props.username} />)
 			}
-		</div>
+		</ul>
 		<MessageInput
 			onAddPublicMessage={props.onAddPublicMessage}
 			onAddPrivateMessage={props.onAddPrivateMessage}
