@@ -15,6 +15,7 @@ const MessageInput = props => (
 					key={player.username}
 					value={player.username}
 					disabled={player.username === props.username
+					|| player.died
 					|| props.phase[0] !== 'N'
 					|| props.status === 'blackmailed'}
 				>{player.username}
