@@ -45,6 +45,7 @@ const Game = props => (
 					onAddPublicMessage={props._onAddPublicMessage}
 					onAddPrivateMessage={props._onAddPrivateMessage}
 					onAddDeadMessage={props._onAddDeadMessage}
+					onAddMafiaMessage={props._onAddMafiaMessage}
 					players={props.players}
 					username={props.username}
 					phase={props.phase}
@@ -65,7 +66,7 @@ const Game = props => (
 				/>
 			</div>
 		</div>
-		<ReactModal isOpen={props.showModal}>
+		<ReactModal isOpen={props.showModal || false}>
 			<div className="d-flex justify-content-between">
 				<div className="lead">{props.selectedLastWill}</div>
 				<button
@@ -76,7 +77,7 @@ const Game = props => (
 				</button>
 			</div>
 		</ReactModal>
-		<ReactModal isOpen={props.ended}>
+		<ReactModal isOpen={props.ended || false}>
 			<div className="d-flex justify-content-center">
 				<div>
 					<div className="display-4">Game Ended</div>
@@ -187,6 +188,13 @@ const enhancer = compose(
 				source: props.player.username,
 				gameId: props._id,
 				...messageAndTarget,
+			});
+		},
+		_onAddMafiaMessage: props => (value) => {
+			props.onAddMafiaMessage({
+				source: 'Mafia',
+				gameId: props._id,
+				message: value,
 			});
 		},
 		onShowLastWill: props => (player) => {

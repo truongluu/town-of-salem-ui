@@ -1,0 +1,3 @@
+mutation addMafiaMessage($message: MessageInput!){
+    addMafiaMessage(message: $message)
+}

@@ -1,7 +1,15 @@
 /* eslint-disable no-param-reassign,react/jsx-closing-tag-location */
 import { compose, withHandlers, withState } from 'recompose';
+import { contains } from 'ramda';
 
 import React from 'react';
+
+const MAFIAs = [
+	'Godfather',
+	'Blackmailer',
+	'Framer',
+	'Mafioso',
+];
 
 const MessageInput = props => (
 	<div className="form-group pt-2 px-3">
@@ -12,6 +20,7 @@ const MessageInput = props => (
 				onChange={event => props.updateTargetSelect(event.target.value)}
 			>
 				<option value="all" disabled={props.phase[0] === 'N'}>All</option>
+				{contains(props.role)(MAFIAs) && <option value="mafia">Mafia</option>}
 				{props.players.map(player =>
 					(<option
 						key={player.username}
@@ -45,6 +54,8 @@ const enhancer = compose(
 					props.onAddDeadMessage(event.target.value);
 				} else if (props.targetSelect === 'all') {
 					props.onAddPublicMessage(event.target.value);
+				} else if (props.targetSelect === 'mafia') {
+					props.onAddMafiaMessage(event.target.value);
 				} else {
 					props.onAddPrivateMessage({ message: event.target.value, target: props.targetSelect });
 				}

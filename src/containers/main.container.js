@@ -29,6 +29,7 @@ const Main = props => (
 		onAddPublicMessage={props.onAddPublicMessage}
 		onAddDeadMessage={props.onAddDeadMessage}
 		onAddPrivateMessage={props.onAddPrivateMessage}
+		onAddMafiaMessage={props.onAddMafiaMessage}
 	/> : <Lobby />
 );
 
@@ -73,6 +74,8 @@ const enhancer = compose(
 			props.dispatch(MessageAction.startPublicMessageAdd(message)),
 		onAddDeadMessage: props => message =>
 			props.dispatch(MessageAction.startDeadMessageAdd(message)),
+		onAddMafiaMessage: props => message =>
+			props.dispatch(MessageAction.startMafiaMessageAdd(message)),
 		onAddPrivateMessage: props => message =>
 			props.dispatch(MessageAction.startPrivateMessageAdd(message)),
 	}),

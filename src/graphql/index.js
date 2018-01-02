@@ -19,6 +19,7 @@ import MESSAGE_SUBSCRIPTION from './queries-mutations-subscriptions/message.grap
 import ADD_PUBLIC_MESSAGE from './queries-mutations-subscriptions/add-public-message.graphql';
 import ADD_DEAD_MESSAGE from './queries-mutations-subscriptions/add-dead-message.graphql';
 import ADD_PRIVATE_MESSAGE from './queries-mutations-subscriptions/add-private-message.graphql';
+import ADD_MAFIA_MESSAGE from './queries-mutations-subscriptions/add-mafia-message.graphql';
 
 import { errorLink, queryOrMutationLink, requestLink, subscriptionLink } from './links';
 
@@ -50,4 +51,5 @@ export {
 	ADD_PUBLIC_MESSAGE,
 	ADD_PRIVATE_MESSAGE,
 	ADD_DEAD_MESSAGE,
+	ADD_MAFIA_MESSAGE,
 };

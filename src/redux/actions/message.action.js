@@ -6,17 +6,22 @@ import { createAction } from 'redux-actions';
 /*
 Project file imports
  */
-import { ADD_DEAD_MESSAGE, ADD_PRIVATE_MESSAGE, ADD_PUBLIC_MESSAGE, Client } from '../../graphql';
+import {
+	ADD_DEAD_MESSAGE, ADD_MAFIA_MESSAGE, ADD_PRIVATE_MESSAGE, ADD_PUBLIC_MESSAGE,
+	Client,
+} from '../../graphql';
 
 const ActionTypes = {
 	ADD_PUBLIC_MESSAGE: '[Message] ADD_PUBLIC_MESSAGE',
 	ADD_DEAD_MESSAGE: '[Message] ADD_DEAD_MESSAGE',
 	ADD_PRIVATE_MESSAGE: '[Message] ADD_PRIVATE_MESSAGE',
+	ADD_MAFIA_MESSAGE: '[Message] ADD_MAFIA_MESSAGE',
 };
 
 export const AddPublicMessage = createAction(ActionTypes.ADD_PUBLIC_MESSAGE);
 export const AddDeadMessage = createAction(ActionTypes.ADD_DEAD_MESSAGE);
 export const AddPrivateMessage = createAction(ActionTypes.ADD_PRIVATE_MESSAGE);
+export const AddMafiaMessage = createAction(ActionTypes.ADD_MAFIA_MESSAGE);
 
 // "message": {
 // 	"source": "vnhung",
@@ -36,6 +41,13 @@ export const startDeadMessageAdd = message => dispatch =>
 		variables: { message },
 	}).then(result => dispatch(AddDeadMessage(result.data.addDeadMessage)))
 		.catch(e => dispatch(AddDeadMessage(e)));
+
+export const startMafiaMessageAdd = message => dispatch =>
+	Client.mutate({
+		mutation: ADD_MAFIA_MESSAGE,
+		variables: { message },
+	}).then(result => dispatch(AddMafiaMessage(result.data.addMafiaMessage)))
+		.catch(e => dispatch(AddMafiaMessage(e)));
 
 export const startPrivateMessageAdd = message => dispatch =>
 	Client.mutate({
