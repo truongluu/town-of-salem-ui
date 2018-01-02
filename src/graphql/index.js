@@ -17,6 +17,7 @@ import INTERACT from './queries-mutations-subscriptions/interact.graphql';
 import CURRENT_MESSAGES from './queries-mutations-subscriptions/current-messages.graphql';
 import MESSAGE_SUBSCRIPTION from './queries-mutations-subscriptions/message.graphql';
 import ADD_PUBLIC_MESSAGE from './queries-mutations-subscriptions/add-public-message.graphql';
+import ADD_DEAD_MESSAGE from './queries-mutations-subscriptions/add-dead-message.graphql';
 import ADD_PRIVATE_MESSAGE from './queries-mutations-subscriptions/add-private-message.graphql';
 
 import { errorLink, queryOrMutationLink, requestLink, subscriptionLink } from './links';
@@ -48,4 +49,5 @@ export {
 	MESSAGE_SUBSCRIPTION,
 	ADD_PUBLIC_MESSAGE,
 	ADD_PRIVATE_MESSAGE,
+	ADD_DEAD_MESSAGE,
 };

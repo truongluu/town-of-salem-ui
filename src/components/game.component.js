@@ -47,10 +47,13 @@ const Game = props => (
 					messages={props.currentMessagesQuery.currentMessages}
 					onAddPublicMessage={props._onAddPublicMessage}
 					onAddPrivateMessage={props._onAddPrivateMessage}
+					onAddDeadMessage={props._onAddDeadMessage}
 					players={props.players}
 					username={props.username}
 					phase={props.phase}
 					status={props.player.status}
+					died={props.player.died}
+					role={props.player.role}
 				/>
 
 				<PlayerList
@@ -156,6 +159,13 @@ const enhancer = compose(
 	withHandlers({
 		_onAddPublicMessage: props => (value) => {
 			props.onAddPublicMessage({
+				message: value,
+				source: props.player.username,
+				gameId: props._id,
+			});
+		},
+		_onAddDeadMessage: props => (value) => {
+			props.onAddDeadMessage({
 				message: value,
 				source: props.player.username,
 				gameId: props._id,

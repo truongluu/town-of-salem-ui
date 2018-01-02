@@ -27,6 +27,7 @@ const Main = props => (
 		onInteract={props.onInteract}
 		onGoBackToLobby={props.onGoBackToLobby}
 		onAddPublicMessage={props.onAddPublicMessage}
+		onAddDeadMessage={props.onAddDeadMessage}
 		onAddPrivateMessage={props.onAddPrivateMessage}
 	/> : <Lobby />
 );
@@ -70,6 +71,8 @@ const enhancer = compose(
 		onGoBackToLobby: props => () => props.client.resetStore(),
 		onAddPublicMessage: props => message =>
 			props.dispatch(MessageAction.startPublicMessageAdd(message)),
+		onAddDeadMessage: props => message =>
+			props.dispatch(MessageAction.startDeadMessageAdd(message)),
 		onAddPrivateMessage: props => message =>
 			props.dispatch(MessageAction.startPrivateMessageAdd(message)),
 	}),

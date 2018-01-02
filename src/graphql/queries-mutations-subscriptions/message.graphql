@@ -2,6 +2,7 @@ subscription message($token: String!) {
     message(token: $token){
         source,
         target,
+        dead,
         message,
         gameId
     }

@@ -3,5 +3,6 @@ query currentMessages($gameId: String!){
         source
         target
         message
+        dead
     }
 }

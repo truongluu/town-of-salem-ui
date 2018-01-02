@@ -20,7 +20,7 @@ const Authentication = props => (
 					<div className="card-header">
 						<h3>Authentication</h3>
 					</div>
-					<div className="card-body">
+					<div className="card-body px-md-5">
 						<div className="form-group">
 							<input
 								type="text"

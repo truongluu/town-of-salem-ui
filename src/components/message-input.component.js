@@ -19,7 +19,8 @@ const MessageInput = props => (
 						disabled={player.username === props.username
 						|| player.died
 						|| props.phase[0] !== 'N'
-						|| props.status === 'blackmailed'}
+						|| props.status === 'blackmailed'
+						|| props.died}
 					>{player.username}
 					</option>))}
 			</select>
@@ -40,7 +41,9 @@ const enhancer = compose(
 	withHandlers({
 		onInputMessage: props => (event) => {
 			if (event.key === 'Enter' && event.target.value.trim() !== '') {
-				if (props.targetSelect === 'all') {
+				if (props.died) {
+					props.onAddDeadMessage(event.target.value);
+				} else if (props.targetSelect === 'all') {
 					props.onAddPublicMessage(event.target.value);
 				} else {
 					props.onAddPrivateMessage({ message: event.target.value, target: props.targetSelect });
