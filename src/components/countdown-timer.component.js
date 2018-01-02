@@ -65,11 +65,7 @@ class CountdownTimer extends React.Component {
 
 		const totalSeconds = Math.round(milliseconds / 1000);
 
-		let seconds = parseInt(totalSeconds % 60, 10);
-
-		seconds = seconds < 10 ? `0${seconds}` : seconds;
-
-		return `${seconds}`;
+		return `${totalSeconds}`;
 	}
 
 	tick() {
