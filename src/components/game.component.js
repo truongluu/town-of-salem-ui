@@ -12,7 +12,6 @@ Project file imports
 import CountdownTimer from './countdown-timer.component';
 import Player from './player.component';
 import PlayerList from './player-list.component';
-import GameEnded from './game-ended.component';
 import { CURRENT_MESSAGES, MESSAGE_SUBSCRIPTION } from '../graphql';
 import Messages from './messages.component';
 
@@ -38,8 +37,6 @@ const Game = props => (
 		</div>
 		<div className="container">
 			<div className="row">
-				{props.ended &&
-				<GameEnded id={props.id} onGoBackToLobby={props.onGoBackToLobby} won={props.player.won} />}
 
 				<Player player={props.player} onUpdateLastWill={props.onUpdateLastWill} />
 
@@ -77,6 +74,20 @@ const Game = props => (
 				>
 					Close
 				</button>
+			</div>
+		</ReactModal>
+		<ReactModal isOpen={props.ended}>
+			<div className="d-flex justify-content-center">
+				<div>
+					<div className="display-4">Game Ended</div>
+					<div className="display-4">{props.player.won ? 'You won!' : 'You lose!'}</div>
+					<button
+						className="btn btn-outline-primary"
+						onClick={props.onGoBackToLobby}
+					>
+						Go Back To Lobby
+					</button>
+				</div>
 			</div>
 		</ReactModal>
 	</div>
